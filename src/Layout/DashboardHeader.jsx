@@ -1,0 +1,88 @@
+// eslint-disable-next-line no-unused-vars
+import * as React from "react";
+import { FiBell, FiSettings } from "react-icons/fi";
+import { AiOutlineSearch } from "react-icons/ai";
+import { Link, useLocation } from "react-router-dom";
+
+const breadcrumbMap = {
+  "/": "Home",
+  "/Dashboard": "Dashboard",
+  "/Attendance": "Attendance",
+  "/HomeWork": "Home Work",
+  "/dashboard/profile": "Profile",
+};
+
+const DashboardHeader = ({ firstName, lastName }) => {
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((x) => x);
+
+  return (
+    <div className="flex justify-between items-center w-4/5 fixed z-30 p-4 bg-white shadow-lg">
+      <div className="flex flex-col">
+        <div className="flex items-center space-x-2">
+          <h6 className="text-[#002D42] font-semibold">Welcome,</h6>
+          <h5 className="text-[#FF424E] font-bold">{`${firstName} ${lastName}`}!</h5>
+        </div>
+
+        <div className="flex items-center space-x-2 text-sm text-[#002D42] mt-1">
+          {pathnames.length > 0 ? (
+            <div className="flex items-center">
+              <Link to="/" className="text-[#002D42] hover:text-[#FF424E] font-semibold">
+                Home
+              </Link>
+              {pathnames.map((value, index) => {
+                const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
+                const isLast = index === pathnames.length - 1;
+                return (
+                  <span key={value} className="flex items-center">
+                    <span className="text-gray-400 mx-2">/</span>
+                    {isLast ? (
+                      <span className="font-bold text-[#002D42]">
+                        {breadcrumbMap[routeTo] || value}
+                      </span>
+                    ) : (
+                      <Link
+                        to={routeTo}
+                        className="text-[#002D42] hover:text-[#FF424E] font-semibold"
+                      >
+                        {breadcrumbMap[routeTo] || value}
+                      </Link>
+                    )}
+                  </span>
+                );
+              })}
+            </div>
+          ) : (
+            <span className="font-bold text-[#002D42]">Home</span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex items-center w-1/2 bg-gray-100 rounded-lg px-4 py-3 shadow-sm">
+        <AiOutlineSearch className="text-[#002D42] mr-2" size={20} />
+        <input
+          type="text"
+          placeholder="Search your dashboard..."
+          className="bg-transparent w-full outline-none text-base text-[#002D42]"
+        />
+      </div>
+
+      <div className="flex items-center space-x-6">
+        <div className="relative cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
+          <FiBell size={24} className="text-[#002D42]" />
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+            3
+          </span>
+        </div>
+
+        <div className="cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
+          <FiSettings size={24} className="text-[#002D42]" />
+        </div>
+
+    
+      </div>
+    </div>
+  );
+};
+
+export default DashboardHeader;
