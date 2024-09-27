@@ -11,12 +11,12 @@ const DashboardLayout = () => {
       <DashboardSidebar />
 
       {/* Main content area */}
-      <div className="flex-grow p-2">
+      <div className="flex-grow pl-64"> {/* Adjust for fixed sidebar width */}
         {/* Header */}
         <DashboardHeader firstName="Krish" lastName="Patel" />
 
         {/* Main content */}
-        <div className="flex-grow p-8 mt-16">
+        <div className="flex-grow p-8 mt-16"> {/* Adjust for fixed header height */}
           <Outlet />
         </div>
       </div>

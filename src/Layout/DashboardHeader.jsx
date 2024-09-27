@@ -17,17 +17,17 @@ const DashboardHeader = ({ firstName, lastName }) => {
   const pathnames = location.pathname.split("/").filter((x) => x);
 
   return (
-    <div className="flex justify-between items-center w-4/5 fixed z-30 p-4 bg-white shadow-lg">
+    <div className="fixed top-3 left-64 right-0 flex justify-between items-center z-30 p-4 rounded-md m-4 bg-white shadow-lg h-16"> {/* Fixed position and adjusted for sidebar */}
       <div className="flex flex-col">
         <div className="flex items-center space-x-2">
-          <h6 className="text-[#002D42] font-semibold">Welcome,</h6>
-          <h5 className="text-[#FF424E] font-bold">{`${firstName} ${lastName}`}!</h5>
+          <h6 className="text-secondaryColor font-semibold">Welcome,</h6>
+          <h5 className="text-primaryColor font-bold">{`${firstName} ${lastName}`}</h5>
         </div>
 
-        <div className="flex items-center space-x-2 text-sm text-[#002D42] mt-1">
+        <div className="flex items-center space-x-2 text-sm text-secondaryColor mt-1">
           {pathnames.length > 0 ? (
             <div className="flex items-center">
-              <Link to="/" className="text-[#002D42] hover:text-[#FF424E] font-semibold">
+              <Link to="/" className="text-secondaryColor font-semibold">
                 Home
               </Link>
               {pathnames.map((value, index) => {
@@ -35,15 +35,15 @@ const DashboardHeader = ({ firstName, lastName }) => {
                 const isLast = index === pathnames.length - 1;
                 return (
                   <span key={value} className="flex items-center">
-                    <span className="text-gray-400 mx-2">/</span>
+                    <span className="text-secondaryColor mx-2">/</span>
                     {isLast ? (
-                      <span className="font-bold text-[#002D42]">
+                      <span className="font-bold">
                         {breadcrumbMap[routeTo] || value}
                       </span>
                     ) : (
                       <Link
                         to={routeTo}
-                        className="text-[#002D42] hover:text-[#FF424E] font-semibold"
+                        className=" font-semibold"
                       >
                         {breadcrumbMap[routeTo] || value}
                       </Link>
@@ -63,23 +63,21 @@ const DashboardHeader = ({ firstName, lastName }) => {
         <input
           type="text"
           placeholder="Search your dashboard..."
-          className="bg-transparent w-full outline-none text-base text-[#002D42]"
+          className="bg-transparent w-full outline-none text-base text-secondaryColor"
         />
       </div>
 
       <div className="flex items-center space-x-6">
         <div className="relative cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
-          <FiBell size={24} className="text-[#002D42]" />
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+          <FiBell size={24} className="text-secondaryColor" />
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 text-xs font-bold leading-none text-white  bg-primaryColor rounded-full">
             3
           </span>
         </div>
 
-        <div className="cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
-          <FiSettings size={24} className="text-[#002D42]" />
+        <div className="cursor-pointer hover:text-primaryColor transition-all duration-200 ease-in-out">
+          <FiSettings size={24} className="text-secondaryColor" />
         </div>
-
-    
       </div>
     </div>
   );

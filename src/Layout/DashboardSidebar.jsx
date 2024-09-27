@@ -10,11 +10,7 @@ const menuItems = [
   { text: "Dashboard", icon: <MdOutlineDashboard />, path: "/Dashboard" },
   { text: "Attendance", icon: <FiMail />, path: "/Attendance" },
   { text: "Homework", icon: <HiOutlineBuildingLibrary />, path: "/HomeWork" },
-  {
-    text: "Notification",
-    icon: <HiOutlineDocumentText />,
-    path: "/Notification",
-  },
+  { text: "Notification", icon: <HiOutlineDocumentText />, path: "/Notification" },
   { text: "Profile", icon: <FiLinkedin />, path: "/Profile" },
 ];
 
@@ -22,8 +18,11 @@ export default function DashboardSidebar() {
   const location = useLocation();
 
   return (
-    <div className="w-64 h-screen bg-gray-100 shadow-lg p-4">
-      <Link to="/"></Link>
+    <div className="w-64 h-screen fixed top-0 left-0 z-40 bg-white shadow-lg p-4"> {/* Fixed position */}
+      <Link to="/" className="text-primaryColor text-xl font-bold inline-block">
+        <span className="text-primaryColor font-bold ">Vidhya </span>{" "}
+        <span className="text-secondaryColor font-bold ">Assist</span>
+      </Link>
 
       <nav className="mt-8">
         <ul className="space-y-2">
@@ -33,8 +32,8 @@ export default function DashboardSidebar() {
                 to={item.path}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   location.pathname === item.path
-                    ? "bg-red-100 text-red-600"
-                    : "text-gray-600 hover:bg-gray-200"
+                    ? "bg-red-100 text-primaryColor"
+                    : "text-secondaryColor hover:bg-gray-200"
                 }`}
               >
                 <span className="mr-4">{item.icon}</span>
