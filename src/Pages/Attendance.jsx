@@ -44,7 +44,7 @@ const StudentProfile = ({ student }) => {
 
         {/* Arrow Icon */}
         <div className="text-gray-500">
-          {isOpen ? <IoIosArrowUp size={24} /> : <IoIosArrowDown size={18} />}
+          {isOpen ? <IoIosArrowUp size={18} /> : <IoIosArrowDown size={18} />}
         </div>
       </div>
 
