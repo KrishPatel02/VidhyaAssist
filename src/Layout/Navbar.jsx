@@ -14,8 +14,8 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full z-50 bg-white shadow-md">
       <div className="flex justify-evenly items-center py-3 px-5">
         <div className="flex justify-center t-4xl">
-          <h1 className="text-primaryColor font-bold ">Vidhya</h1>
-          <h1 className="text-secondaryColor font-bold ">Assist</h1>
+          <h1 className="text-xl text-primaryColor font-bold ">Vidhya</h1>
+          <h1 className="text-xl text-secondaryColor font-bold ">Assist</h1>
         </div>
 
         <div className="relative w-2/5">
