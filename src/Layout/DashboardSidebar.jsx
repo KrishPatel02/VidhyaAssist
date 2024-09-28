@@ -9,8 +9,8 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 const menuItems = [
   { text: "Dashboard", icon: <MdOutlineDashboard />, path: "/Dashboard" },
   { text: "Attendance", icon: <FiMail />, path: "/Attendance" },
-  { text: "Homework", icon: <HiOutlineBuildingLibrary />, path: "/HomeWork" },
-  { text: "Notification", icon: <HiOutlineDocumentText />, path: "/Notification" },
+  { text: "Assignment", icon: <HiOutlineBuildingLibrary />, path: "/Assignment" },
+  { text: "Announcement", icon: <HiOutlineDocumentText />, path: "/Announcement" },
   { text: "Profile", icon: <FiLinkedin />, path: "/Profile" },
 ];
 

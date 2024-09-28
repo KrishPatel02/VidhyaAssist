@@ -9,8 +9,8 @@ import Home from "./Pages/Home";
 import LogIn from "./Pages/LogIn";
 import SignUp from "./Pages/SignUp";
 import Attendance from "./Pages/Attendance";
-import HomeWork from "./Pages/HomeWork";
-import Notification from "./Pages/Notification";
+import Assignment from "./Pages/Assignment";
+import Announcement from "./Pages/Announcement";
 import Profile from "./Pages/Profile";
 import Dashboard from "./Pages/Dashboard";
 import "./index.css";
@@ -30,8 +30,8 @@ const App = () => {
           <Route element={<DashboardLayout />}>
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Attendance" element={<Attendance />} />
-            <Route path="/HomeWork" element={<HomeWork />} />
-            <Route path="/Notification" element={<Notification />} />
+            <Route path="/Assignment" element={<Assignment />} />
+            <Route path="/Announcement" element={<Announcement />} />
             <Route path="/Profile" element={<Profile />} />
           </Route>
         </Routes>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { AiOutlineNotification } from "react-icons/ai";
 
-const notifications = [
+const announcements = [
   {
     id: 1,
     date: "2024/09/24",
@@ -42,18 +42,18 @@ const notifications = [
   },
 ];
 
-const groupByDate = (notifications) => {
-  return notifications.reduce((grouped, notification) => {
-    const date = notification.date;
+const groupByDate = (announcements) => {
+  return announcements.reduce((grouped, announcement) => {
+    const date = announcement.date;
     if (!grouped[date]) {
       grouped[date] = [];
     }
-    grouped[date].push(notification);
+    grouped[date].push(announcement);
     return grouped;
   }, {});
 };
 
-const NotificationItem = ({ notification }) => {
+const AnnouncementItem = ({ announcement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -65,7 +65,7 @@ const NotificationItem = ({ notification }) => {
         <div className="flex items-center">
           <AiOutlineNotification className="text-primaryColor w-6 h-6 mr-2" />
           <span className="font-semibold text-gray-900">
-            {notification.title}
+            {announcement.title}
           </span>
         </div>
         {isOpen ? (
@@ -76,9 +76,9 @@ const NotificationItem = ({ notification }) => {
       </div>
       {isOpen && (
         <div className="mt-2 text-gray-700">
-          <p>{notification.details}</p>
+          <p>{announcement.details}</p>
           <p className="text-sm text-gray-500 mt-1">
-            By {notification.author} at {notification.time}
+            By {announcement.author} at {announcement.time}
           </p>
         </div>
       )}
@@ -86,28 +86,28 @@ const NotificationItem = ({ notification }) => {
   );
 };
 
-const NotificationPage = () => {
-  const groupedNotifications = groupByDate(notifications);
+const AnnouncementPage = () => {
+  const groupedAnnouncements = groupByDate(announcements);
 
   return (
     <div className=" min-h-screen ">
       <div className=" mx-auto p-4">
         <div className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-800">
-            Notifications
+            Announcement
           </h1>
           <p className="text-gray-600">
             Stay updated with the latest announcements
           </p>
         </div>
 
-        {Object.keys(groupedNotifications).map((date) => (
+        {Object.keys(groupedAnnouncements).map((date) => (
           <div key={date} className="mb-8">
             <div className="text-gray-500 text-sm mb-3 font-medium">{date}</div>
-            {groupedNotifications[date].map((notification) => (
-              <NotificationItem
-                key={notification.id}
-                notification={notification}
+            {groupedAnnouncements[date].map((announcement) => (
+              <AnnouncementItem
+                key={announcement.id}
+                announcement={announcement}
               />
             ))}
           </div>
@@ -117,4 +117,4 @@ const NotificationPage = () => {
   );
 };
 
-export default NotificationPage;
+export default AnnouncementPage;

@@ -81,7 +81,15 @@ const StudentProfile = ({ student }) => {
 const App = () => {
   return (
     <div className="min-h-screen py-2 px-4">
-      <div className=" mx-auto space-y-2">
+      {/* Attendance description */}
+      <div className="text-gray-700 text-sm mb-4">
+      <h1 className="text-2xl font-semibold text-gray-800">
+            Attendance
+          </h1>
+        View and track student attendance and weekly progress below.
+      </div>
+
+      <div className="mx-auto space-y-2">
         {students.map((student) => (
           <StudentProfile key={student.id} student={student} />
         ))}

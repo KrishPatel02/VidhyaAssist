@@ -12,7 +12,7 @@ import { BiSearch } from "react-icons/bi";
 import { MdOutlineOpenInNew } from "react-icons/md";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
-function HomeWork() {
+function Assignment() {
   const [showFileInput, setShowFileInput] = useState(false);
   const [expandedFolder, setExpandedFolder] = useState(null); // For accordion toggle
 
@@ -67,7 +67,14 @@ function HomeWork() {
 
   return (
     <div className="bg-gray-50 min-h-screen relative">
+      {/* Assignment description */}
       <div className="p-4 space-y-4">
+        <h1 className="text-2xl font-semibold text-gray-800">Assignment</h1>
+        <p className="text-gray-600">
+        Manage and track Assignment and student submissions.
+        </p>
+
+        {/* Folder Display */}
         {folders.map((folder, index) => (
           <div
             key={index}
@@ -177,4 +184,4 @@ function HomeWork() {
   );
 }
 
-export default HomeWork;
+export default Assignment;

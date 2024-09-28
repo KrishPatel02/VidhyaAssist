@@ -33,7 +33,7 @@ const HomePage = () => {
             </p>
             <ul className="list-disc list-inside mb-4">
               <li>Real-time attendance updates</li>
-              <li>Automated notifications for absentees</li>
+              <li>Automated Announcement for absentees</li>
               <li>Customizable attendance reports</li>
             </ul>
           </div>
@@ -54,7 +54,7 @@ const HomePage = () => {
             </p>
             <ul className="list-disc list-inside mb-4">
               <li>Real-time attendance updates</li>
-              <li>Automated notifications for absentees</li>
+              <li>Automated Announcement for absentees</li>
               <li>Customizable attendance reports</li>
             </ul>
           </div>
@@ -75,7 +75,7 @@ const HomePage = () => {
             </p>
             <ul className="list-disc list-inside mb-4">
               <li>Real-time attendance updates</li>
-              <li>Automated notifications for absentees</li>
+              <li>Automated Announcement for absentees</li>
               <li>Customizable attendance reports</li>
             </ul>
           </div>

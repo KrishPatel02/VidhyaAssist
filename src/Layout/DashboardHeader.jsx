@@ -8,7 +8,7 @@ const breadcrumbMap = {
   "/": "Home",
   "/Dashboard": "Dashboard",
   "/Attendance": "Attendance",
-  "/HomeWork": "Home Work",
+  "/Assignment": "Assignment",
   "/dashboard/profile": "Profile",
 };
 
@@ -68,12 +68,15 @@ const DashboardHeader = ({ firstName, lastName }) => {
       </div>
 
       <div className="flex items-center space-x-6">
-        <div className="relative cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
-          <FiBell size={24} className="text-secondaryColor" />
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 text-xs font-bold leading-none text-white  bg-primaryColor rounded-full">
-            3
-          </span>
-        </div>
+        <Link to="/Announcement" className="text-primaryColor text-xl font-bold inline-block">
+          <div className="relative cursor-pointer hover:text-[#FF424E] transition-all duration-200 ease-in-out">
+
+            <FiBell size={24} className="text-secondaryColor" />
+            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1 text-xs font-bold leading-none text-white  bg-primaryColor rounded-full">
+              3
+            </span>
+          </div>
+        </Link>
 
         <div className="cursor-pointer hover:text-primaryColor transition-all duration-200 ease-in-out">
           <FiSettings size={24} className="text-secondaryColor" />
