@@ -12,6 +12,7 @@ const menuItems = [
   { text: "Assignment", icon: <HiOutlineBuildingLibrary />, path: "/Assignment" },
   { text: "Announcement", icon: <HiOutlineDocumentText />, path: "/Announcement" },
   { text: "Profile", icon: <FiLinkedin />, path: "/Profile" },
+  { text: "StudentProfile", icon: <FiLinkedin />, path: "/StudentProfile" },
 ];
 
 export default function DashboardSidebar() {

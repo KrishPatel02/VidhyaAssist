@@ -1,17 +1,9 @@
-import React from "react";
-import { FiUser, FiBookOpen, FiBarChart2 } from "react-icons/fi";
+import React, { useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
   BarChart,
   Bar,
-  PieChart,
-  Pie,
+  LineChart,
+  Line,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
@@ -19,152 +11,130 @@ import {
   Radar,
   AreaChart,
   Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
 } from "recharts";
-
-const data = [
-  { name: "Jan", abcde: 65 },
-  { name: "Feb", abcde: 78 },
-  { name: "Mar", abcde: 85 },
-  { name: "Apr", abcde: 90 },
-  { name: "May", abcde: 95 },
-  { name: "Jun", abcde: 92 },
-];
-
-const pieData = [
-  { name: "asdfasdf", value: 30 },
-  { name: "zxcvzxcv", value: 20 },
-  { name: "qwerqwer", value: 50 },
-];
-
-const barData = [
-  { name: "kasdfkjdf", students: 100 },
-  { name: "ksdfkdfj", students: 90 },
-  { name: "asdfkdsfk", students: 120 },
-];
-
-const radarData = [
-  { subject: "Gift City", A: 85, fullMark: 100 },
-  { subject: "Bangalore", A: 92, fullMark: 100 },
-  { subject: "Pune", A: 80, fullMark: 100 },
-];
+import { db, ref, onValue } from "../firebase";
 
 const Dashboard = () => {
+  const [studentData, setStudentData] = useState([]);
+  const primaryColor = "#FF424E";
+  const secondaryColor = "#002D42";
+
+  useEffect(() => {
+    const studentRef = ref(db, "students/");
+    onValue(studentRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const formattedData = Object.values(data);
+        setStudentData(formattedData);
+      }
+    });
+  }, []);
+
+  const standards = [6, 7, 8, 9, 10];
+  const attendanceData = standards.map((std) => {
+    const filteredStudents = studentData.filter((student) => student.Std === std);
+    const avgAttendance =
+      filteredStudents.reduce((sum, student) => sum + student.AttendancePercentage, 0) /
+      filteredStudents.length;
+    return { std: `Std ${std}`, avgAttendance: avgAttendance || 0 };
+  });
+
+  const homeworkData = standards.map((std) => {
+    const filteredStudents = studentData.filter((student) => student.Std === std);
+    const totalPending = filteredStudents.reduce((sum, student) => sum + student.HomeworkPending, 0);
+    const totalSubmitted = filteredStudents.reduce(
+      (sum, student) => sum + student.HomeworkSubmitted,
+      0
+    );
+    return { std: `Std ${std}`, pending: totalPending, submitted: totalSubmitted };
+  });
+
+  const performanceData = standards.map((std) => {
+    const filteredStudents = studentData.filter((student) => student.Std === std);
+    const gradeCounts = filteredStudents.reduce(
+      (acc, student) => {
+        acc[student.PerformanceGrade] = (acc[student.PerformanceGrade] || 0) + 1;
+        return acc;
+      },
+      { A: 0, B: 0, C: 0, D: 0, E: 0 }
+    );
+    return { std: `Std ${std}`, ...gradeCounts };
+  });
+
   return (
-    <div className="flex-grow p-2 ">
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Card 1 */}
-      <div className="bg-white text-[#002D42] shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <div>
-          <h6 className="font-semibold text-lg text-gray-700">Applications</h6>
-          <div className="flex justify-between items-center mt-4">
-            <FiUser size={28} className="text-[#FF424E]" />
-            <h3 className="text-4xl font-bold text-gray-900">250</h3>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white text-[#002D42] shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <div>
-          <h6 className="font-semibold text-lg text-gray-700">Admissions</h6>
-          <div className="flex justify-between items-center mt-4">
-            <FiBookOpen size={28} className="text-[#FF424E]" />
-            <h3 className="text-4xl font-bold text-gray-900">32</h3>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white text-[#002D42] shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <div>
-          <h6 className="font-semibold text-lg text-gray-700">Applied University</h6>
-          <div className="flex justify-between items-center mt-4">
-            <FiBarChart2 size={28} className="text-[#FF424E]" />
-            <h3 className="text-4xl font-bold text-gray-900">89%</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Line Chart */}
-    <div className="mt-8">
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <h6 className="font-semibold text-lg text-gray-700 mb-4">CV Selected</h6>
+    <div className="flex-grow p-2">
+      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200 mt-8">
+        <h6 className="font-semibold text-lg text-gray-700 mb-4">Homework Status by Standard</h6>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <Line type="monotone" dataKey="abcde" stroke="#FF424E" strokeWidth={2} />
+          <BarChart data={homeworkData}>
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" stroke="#333" />
-            <YAxis stroke="#333" />
+            <XAxis dataKey="std" stroke={secondaryColor} />
+            <YAxis stroke={secondaryColor} />
             <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-      {/* Bar Chart */}
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <h6 className="font-semibold text-lg text-gray-700 mb-4">LinkedIn Engagement</h6>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={barData}>
-            <Bar dataKey="students" fill="#FF424E" barSize={30} />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" stroke="#333" />
-            <YAxis stroke="#333" />
-            <Tooltip />
+            <Bar dataKey="pending" fill={primaryColor} barSize={20} />
+            <Bar dataKey="submitted" fill="#FF848B" barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Pie Chart */}
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <h6 className="font-semibold text-lg text-gray-700 mb-4">Applications</h6>
+      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200 mt-8">
+        <h6 className="font-semibold text-lg text-gray-700 mb-4">Attendance Overview by Standard</h6>
         <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={pieData}
-              dataKey="value"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              fill="#FF424E"
-              label
-            />
+          <LineChart data={attendanceData}>
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="std" stroke={secondaryColor} />
+            <YAxis stroke={secondaryColor} />
             <Tooltip />
-          </PieChart>
+            <Line type="monotone" dataKey="avgAttendance" stroke={primaryColor} strokeWidth={2} />
+          </LineChart>
         </ResponsiveContainer>
       </div>
-    </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-      {/* Radar Chart */}
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <h6 className="font-semibold text-lg text-gray-700 mb-4">Job Location</h6>
+      {/* Radar Chart - Performance Grades */}
+      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200 mt-8">
+        <h6 className="font-semibold text-lg text-gray-700 mb-4">Student Performance by Standard</h6>
         <ResponsiveContainer width="100%" height={300}>
-          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={performanceData}>
             <PolarGrid />
-            <PolarAngleAxis dataKey="subject" stroke="#333" />
-            <PolarRadiusAxis stroke="#333" />
-            <Radar name="abcde" dataKey="A" stroke="#FF424E" fill="#FF424E" fillOpacity={0.6} />
+            <PolarAngleAxis dataKey="std" stroke={secondaryColor} />
+            <PolarRadiusAxis stroke={secondaryColor} />
+            <Radar
+              name="Performance"
+              dataKey="A"
+              stroke={primaryColor}
+              fill={primaryColor}
+              fillOpacity={0.6}
+            />
             <Tooltip />
           </RadarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Area Chart */}
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200">
-        <h6 className="font-semibold text-lg text-gray-700 mb-4">Job Offer</h6>
+      {/* Area Chart - Combined Statistics */}
+      <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl transition duration-300 border border-gray-200 mt-8">
+        <h6 className="font-semibold text-lg text-gray-700 mb-4">Combined Statistics by Standard</h6>
         <ResponsiveContainer width="100%" height={300}>
-          <AreaChart data={data}>
+          <AreaChart data={attendanceData}>
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="name" stroke="#333" />
-            <YAxis stroke="#333" />
+            <XAxis dataKey="std" stroke={secondaryColor} />
+            <YAxis stroke={secondaryColor} />
             <Tooltip />
-            <Area type="monotone" dataKey="abcde" stroke="#FF424E" fill="#FF848B" />
+            <Area
+              type="monotone"
+              dataKey="avgAttendance"
+              stroke={primaryColor}
+              fill="#FF848B"
+              fillOpacity={0.5}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
-  </div>
   );
 };
 

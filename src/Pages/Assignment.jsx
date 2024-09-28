@@ -92,17 +92,17 @@ function Assignment() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <button className="text-primaryColor hover:text-secondaryColor transition-colors">
+                <button className="text-secondaryColor hover:text-primaryColor transition-colors">
                   <MdOutlineOpenInNew size={24} />
                 </button>
-                <button className="text-primaryColor hover:text-secondaryColor transition-colors">
+                <button className="text-secondaryColor hover:text-primaryColor transition-colors">
                   <AiOutlineDownload size={24} />
                 </button>
-                <button className="text-red-500 hover:text-red-600 transition-colors">
+                <button className="text-secondaryColor hover:text-primaryColor transition-colors">
                   <AiOutlineDelete size={24} />
                 </button>
                 <button
-                  className="text-primaryColor hover:text-secondaryColor transition-colors"
+                  className="text-secondaryColor hover:text-primaryColor transition-colors"
                   onClick={() => toggleAccordion(index)}
                 >
                   {expandedFolder === index ? (
@@ -114,7 +114,6 @@ function Assignment() {
               </div>
             </div>
 
-            {/* Accordion Section for Completion Chart */}
             {expandedFolder === index && (
               <div className="px-4 pb-4">
                 <div className="flex items-center justify-between">
@@ -130,7 +129,6 @@ function Assignment() {
                       width: `${
                         (folder.completed / folder.totalStudents) * 100
                       }%`,
-                      // backgroundColor: "var(--primaryColor)",
                     }}
                   ></div>
                 </div>
@@ -140,7 +138,6 @@ function Assignment() {
         ))}
       </div>
 
-      {/* Add New Folder Button */}
       <div className="fixed right-6 bottom-16">
         <button
           className="w-12 h-12 bg-primaryColor text-white rounded-full flex items-center justify-center shadow-lg hover:bg-secondaryColor transition-colors"
@@ -150,7 +147,6 @@ function Assignment() {
         </button>
       </div>
 
-      {/* File Input Modal */}
       {showFileInput && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div

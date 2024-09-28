@@ -13,6 +13,7 @@ import Assignment from "./Pages/Assignment";
 import Announcement from "./Pages/Announcement";
 import Profile from "./Pages/Profile";
 import Dashboard from "./Pages/Dashboard";
+import StudentProfile from "./Pages/StudentProfile";
 import "./index.css";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/Assignment" element={<Assignment />} />
             <Route path="/Announcement" element={<Announcement />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/StudentProfile" element={<StudentProfile />} />
           </Route>
         </Routes>
       </Router>

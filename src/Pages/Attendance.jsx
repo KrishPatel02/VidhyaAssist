@@ -1,20 +1,13 @@
-// App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { db, ref, onValue } from "../firebase"; // Assuming Firebase is initialized in firebase.js
 
-const students = [
-  { id: 1, name: "John Doe", attendance: 92, imageUrl: "https://via.placeholder.com/50" },
-  { id: 2, name: "Jane Smith", attendance: 85, imageUrl: "https://via.placeholder.com/50" },
-  { id: 3, name: "Michael Johnson", attendance: 76, imageUrl: "https://via.placeholder.com/50" },
-  { id: 4, name: "Emily Davis", attendance: 89, imageUrl: "https://via.placeholder.com/50" },
-];
-
-const attendanceData = [
-  { name: "Week 1", attendance: 95 },
-  { name: "Week 2", attendance: 92 },
-  { name: "Week 3", attendance: 89 },
-  { name: "Week 4", attendance: 87 },
+const attendanceDataTemplate = [
+  { name: "Week 1", attendance: 0 },
+  { name: "Week 2", attendance: 0 },
+  { name: "Week 3", attendance: 0 },
+  { name: "Week 4", attendance: 0 },
 ];
 
 const StudentProfile = ({ student }) => {
@@ -56,7 +49,7 @@ const StudentProfile = ({ student }) => {
           <div className="px-6 py-4">
             <h4 className="text-gray-700 font-medium mb-3">Weekly Attendance Overview</h4>
             <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={attendanceData}>
+              <LineChart data={student.weeklyAttendance}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
@@ -79,13 +72,32 @@ const StudentProfile = ({ student }) => {
 };
 
 const App = () => {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    const studentRef = ref(db, "students/");
+    onValue(studentRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const formattedData = Object.keys(data).map((key) => ({
+          id: key,
+          name: data[key].Name || "Unnamed Student",
+          attendance: data[key].AttendancePercentage || 0,
+          imageUrl: data[key].imageUrl || "https://via.placeholder.com/50",
+          weeklyAttendance: data[key].weeklyAttendance || attendanceDataTemplate,
+        }));
+        setStudents(formattedData);
+      }
+    });
+  }, []);
+
   return (
     <div className="min-h-screen py-2 px-4">
       {/* Attendance description */}
       <div className="text-gray-700 text-sm mb-4">
-      <h1 className="text-2xl font-semibold text-gray-800">
-            Attendance
-          </h1>
+        <h1 className="text-2xl font-semibold text-gray-800">
+          Attendance
+        </h1>
         View and track student attendance and weekly progress below.
       </div>
 

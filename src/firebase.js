@@ -1,20 +1,18 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, onValue } from "firebase/database"; // Use Realtime Database functions
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBMTQrY-6o_OtMtG4HMpGGKuw2JRKskrRk",
-  authDomain: "vidhyaassist.firebaseapp.com",
-  projectId: "vidhyaassist",
-  storageBucket: "vidhyaassist.appspot.com",
-  messagingSenderId: "98758324463",
-  appId: "1:98758324463:web:53ee6958f2c1efae7b2b1a",
-  measurementId: "G-7VVBM9F0JY",
+  apiKey: "AIzaSyDjuKLU0MH10MbnlLdVTPIGchEGYq-Loi8",
+  authDomain: "vidhya-assist.firebaseapp.com",
+  projectId: "vidhya-assist",
+  storageBucket: "vidhya-assist.appspot.com",
+  messagingSenderId: "481739097525",
+  appId: "1:481739097525:web:035ba7066dca8814a0c5fc",
+  measurementId: "G-9KWT88NT32",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
+const db = getDatabase(app); // Initialize the Realtime Database
 
-export { db };
+export { db, ref, onValue };
