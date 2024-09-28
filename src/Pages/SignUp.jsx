@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SignupPage = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,24 +18,14 @@ const SignupPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // Add logic here to handle sign-up (e.g., send data to backend)
     alert("Sign-up form submitted!");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        {/* Logo */}
-        <div className="text-center mb-6">
-          <img
-            src="https://via.placeholder.com/100x50.png?text=Logo" // Replace with your logo URL
-            alt="Logo"
-            className="mx-auto"
-          />
-          <h2 className="text-xl font-semibold text-gray-700 mt-2">Your Social Campaigns</h2>
-        </div>
-
-        {/* Sign-up Form */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[var(--primaryColor)] to-[var(--secondaryColor)]">
+      <div className="bg-white p-10 rounded-lg shadow-2xl max-w-lg w-full">
+        <h2 className="text-2xl font-bold text-center text-[var(--primaryColor)] mb-6">Create an Account</h2>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -44,20 +34,20 @@ const SignupPage = () => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 px-4 py-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primaryColor)]"
               placeholder="Enter your name"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Email Address</label>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 px-4 py-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primaryColor)]"
               placeholder="Enter your email"
               required
             />
@@ -70,7 +60,7 @@ const SignupPage = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 px-4 py-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primaryColor)]"
               placeholder="Enter your password"
               required
             />
@@ -78,15 +68,15 @@ const SignupPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="w-full text-white font-semibold py-3 px-4 rounded-md focus:outline-none focus:ring-2 bg-primaryColor"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="mt-4 text-center text-gray-500 text-sm">
+        <p className="mt-4 text-center text-sm text-gray-500">
           Already have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-[var(--primaryColor)] hover:underline">
             Sign In
           </a>
         </p>
@@ -95,4 +85,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SignUp;
