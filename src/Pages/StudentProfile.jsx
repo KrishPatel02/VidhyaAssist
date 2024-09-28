@@ -48,7 +48,7 @@ const StudentProfile = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Student Details</h2>
+      <h2 className="text-xl font-semibold text-gray-800 mb-6">Student Details</h2>
       {studentData.map((student, index) => (
         <div
           key={student.StudentID}
@@ -59,8 +59,8 @@ const StudentProfile = () => {
             onClick={() => toggleAccordion(index)}
           >
             <div className="flex items-center space-x-4">
-              <FiUser className="text-2xl text-gray-600" />
-              <div className="text-xl font-semibold text-gray-800">{student.Name}</div>
+              <FiUser className="text-lg text-gray-600" />
+              <div className="text-md font-semibold text-gray-800">{student.Name}</div>
             </div>
             {expandedIndex === index ? (
               <FiChevronUp className="text-xl text-gray-500" />
