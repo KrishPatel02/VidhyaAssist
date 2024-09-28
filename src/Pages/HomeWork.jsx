@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { AiOutlineFolder, AiOutlinePlus, AiOutlineClose } from "react-icons/ai"; // Import relevant icons
-import { FiMoreVertical } from "react-icons/fi"; // More options icon
-import { BiSearch } from "react-icons/bi"; // Search icon
+import {
+  AiOutlineFolder,
+  AiOutlinePlus,
+  AiOutlineClose,
+  AiOutlineDelete,
+  AiOutlineDownload,
+  AiOutlineFile,
+} from "react-icons/ai";
+import { FiMoreVertical } from "react-icons/fi";
+import { BiSearch } from "react-icons/bi";
+import { MdOutlineOpenInNew } from "react-icons/md";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 function HomeWork() {
   const [showFileInput, setShowFileInput] = useState(false);
+  const [expandedFolder, setExpandedFolder] = useState(null); // For accordion toggle
 
   // Handle file selection
   const handleFileChange = (event) => {
@@ -19,45 +29,106 @@ function HomeWork() {
     setShowFileInput(!showFileInput);
   };
 
+  // Toggle accordion for specific folder
+  const toggleAccordion = (index) => {
+    setExpandedFolder(expandedFolder === index ? null : index);
+  };
+
   const folders = [
-    { name: "A1", modified: "Sep 24" },
-    { name: "A2", modified: "Sep 24" },
-    { name: "A3", modified: "Sep 24" },
-    { name: "A4", modified: "Sep 24" },
+    {
+      name: "A1",
+      modified: "Sep 24, 2024",
+      size: "1.2MB",
+      completed: 75,
+      totalStudents: 100,
+    },
+    {
+      name: "A2",
+      modified: "Sep 24, 2024",
+      size: "2.3MB",
+      completed: 50,
+      totalStudents: 100,
+    },
+    {
+      name: "A3",
+      modified: "Sep 24, 2024",
+      size: "3.4MB",
+      completed: 90,
+      totalStudents: 100,
+    },
+    {
+      name: "A4",
+      modified: "Sep 24, 2024",
+      size: "1.7MB",
+      completed: 30,
+      totalStudents: 100,
+    },
   ];
 
   return (
     <div className="bg-gray-50 min-h-screen relative">
-      {/* Header */}
-      <div className="p-4 bg-primaryColor text-white flex items-center justify-between">
-      
-        <div className="flex items-center space-x-4">
-          <div className="relative">
-            <BiSearch size={24} className="absolute left-2 top-2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="pl-10 pr-4 py-2 rounded-lg text-gray-800 bg-white focus:outline-none"
-            />
-          </div>
-          <button className="text-white">
-            <FiMoreVertical size={24} />
-          </button>
-        </div>
-      </div>
-
-      {/* Folders */}
       <div className="p-4 space-y-4">
         {folders.map((folder, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow"
+            className="bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow"
           >
-            <div className="flex items-center">
-              <AiOutlineFolder className="text-primaryColor w-8 h-8" />
-              <span className="ml-4 text-gray-800 font-medium">{folder.name}</span>
+            {/* Folder Header */}
+            <div className="flex items-center justify-between p-4">
+              <div className="flex items-center">
+                <AiOutlineFolder className="text-primaryColor w-8 h-8" />
+                <div className="ml-4">
+                  <p className="text-gray-800 font-medium">{folder.name}</p>
+                  <p className="text-sm text-gray-500">
+                    Modified: {folder.modified} | Size: {folder.size}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <button className="text-primaryColor hover:text-secondaryColor transition-colors">
+                  <MdOutlineOpenInNew size={24} />
+                </button>
+                <button className="text-primaryColor hover:text-secondaryColor transition-colors">
+                  <AiOutlineDownload size={24} />
+                </button>
+                <button className="text-red-500 hover:text-red-600 transition-colors">
+                  <AiOutlineDelete size={24} />
+                </button>
+                <button
+                  className="text-primaryColor hover:text-secondaryColor transition-colors"
+                  onClick={() => toggleAccordion(index)}
+                >
+                  {expandedFolder === index ? (
+                    <BsChevronUp size={20} />
+                  ) : (
+                    <BsChevronDown size={20} />
+                  )}
+                </button>
+              </div>
             </div>
-            <div className="text-sm text-gray-500">Modified {folder.modified}</div>
+
+            {/* Accordion Section for Completion Chart */}
+            {expandedFolder === index && (
+              <div className="px-4 pb-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-600">Completion Rate:</p>
+                  <p className="text-sm text-gray-600">
+                    {folder.completed} / {folder.totalStudents} students
+                  </p>
+                </div>
+                <div className="w-full bg-gray-200 h-2 rounded-full mt-2">
+                  <div
+                    className="h-2 rounded-full bg-primaryColor"
+                    style={{
+                      width: `${
+                        (folder.completed / folder.totalStudents) * 100
+                      }%`,
+                      // backgroundColor: "var(--primaryColor)",
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -81,7 +152,9 @@ function HomeWork() {
           ></div>
           <div className="relative bg-white p-6 rounded-lg shadow-lg z-10 w-80">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">Upload a File</h3>
+              <h3 className="text-lg font-semibold text-gray-800">
+                Upload a File
+              </h3>
               <button onClick={toggleFileInput}>
                 <AiOutlineClose size={24} className="text-gray-600" />
               </button>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Arrow icons
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { AiOutlineNotification } from "react-icons/ai";
 
 const notifications = [
   {
@@ -23,7 +24,8 @@ const notifications = [
   {
     id: 3,
     date: "2024/09/14",
-    title: "📢 Important Update: Assignment Deadline Extended & Session Rescheduled",
+    title:
+      "📢 Important Update: Assignment Deadline Extended & Session Rescheduled",
     details:
       "The assignment deadline has been extended. Additionally, the session for September 15 has been rescheduled.",
     time: "06:43 PM",
@@ -40,7 +42,6 @@ const notifications = [
   },
 ];
 
-// Group notifications by date
 const groupByDate = (notifications) => {
   return notifications.reduce((grouped, notification) => {
     const date = notification.date;
@@ -53,15 +54,20 @@ const groupByDate = (notifications) => {
 };
 
 const NotificationItem = ({ notification }) => {
-  const [isOpen, setIsOpen] = useState(false); // Track open/close state
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b py-4">
+    <div className="bg-white rounded-lg shadow-md p-4 mb-4 transition-shadow hover:shadow-lg">
       <div
         className="flex justify-between items-center cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)} // Toggle notification details
+        onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-semibold text-gray-900">{notification.title}</span>
+        <div className="flex items-center">
+          <AiOutlineNotification className="text-primaryColor w-6 h-6 mr-2" />
+          <span className="font-semibold text-gray-900">
+            {notification.title}
+          </span>
+        </div>
         {isOpen ? (
           <FaChevronUp className="text-gray-600" />
         ) : (
@@ -69,10 +75,10 @@ const NotificationItem = ({ notification }) => {
         )}
       </div>
       {isOpen && (
-        <div className="mt-2">
-          <p className="text-gray-600">{notification.details}</p>
-          <p className="text-gray-500 text-sm mt-1">
-            by {notification.author} at {notification.time}
+        <div className="mt-2 text-gray-700">
+          <p>{notification.details}</p>
+          <p className="text-sm text-gray-500 mt-1">
+            By {notification.author} at {notification.time}
           </p>
         </div>
       )}
@@ -80,17 +86,29 @@ const NotificationItem = ({ notification }) => {
   );
 };
 
-const App = () => {
+const NotificationPage = () => {
   const groupedNotifications = groupByDate(notifications);
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen">
-      <div className="max-w-xl mx-auto">
+    <div className=" min-h-screen ">
+      <div className=" mx-auto p-4">
+        <div className="mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            Notifications
+          </h1>
+          <p className="text-gray-600">
+            Stay updated with the latest announcements
+          </p>
+        </div>
+
         {Object.keys(groupedNotifications).map((date) => (
-          <div key={date} className="mb-4">
-            <div className="text-gray-500 text-sm mb-2">{date}</div>
+          <div key={date} className="mb-8">
+            <div className="text-gray-500 text-sm mb-3 font-medium">{date}</div>
             {groupedNotifications[date].map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
+              <NotificationItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
           </div>
         ))}
@@ -99,4 +117,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default NotificationPage;
